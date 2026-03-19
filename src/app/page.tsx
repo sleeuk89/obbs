@@ -685,10 +685,10 @@ const trustBadges = [
 
 // Stats
 const stats = [
-  { value: "2,500+", label: "Businesses Supported" },
-  { value: "£180M+", label: "In Transactions Processed" },
+  { value: "500+", label: "Businesses Supported" },
+  { value: "£1M+", label: "In Transactions Processed" },
   { value: "99.8%", label: "Filing Accuracy Rate" },
-  { value: "200+", label: "5-Star Google Reviews" },
+  { value: "100+", label: "5-Star Reviews" },
 ]
 
 // Main Component
@@ -972,7 +972,7 @@ export default function Home() {
           </div>
 
           <div className="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
-            <p>© 2025 OutsourcedBookkeepingServices.co.uk | All Rights Reserved</p>
+            <p>© 2026 OutsourcedBookkeepingServices.co.uk | All Rights Reserved</p>
             <p className="mt-2 text-xs">
               All figures, turnaround times, and service examples discussed are provided for illustration purposes only and are not contractually binding.
             </p>
@@ -1641,7 +1641,7 @@ const HomePage = memo(function HomePage() {
               Our flexible service model means that you are never paying for more than you need. If your business experiences seasonal fluctuations, you can adjust your service level accordingly. If you are planning a period of rapid growth, we can scale up to support increased transaction volumes. And if your circumstances change and you no longer require outsourced bookkeeping, you are free to move on with no penalty or notice period. We earn your business every month through the quality and reliability of our work.
             </p>
             <p>
-              Transparency is central to how we operate. Your fixed monthly fee is agreed before any work begins, and there are no hidden charges, surprise invoices, or unexpected costs. We communicate clearly about what is included, what might incur an additional charge (such as catching up on historical bookkeeping or complex payroll setups), and we always seek your approval before proceeding. This straightforward, honest approach has earned us the trust of over 2,500 UK businesses.
+              Transparency is central to how we operate. Your fixed monthly fee is agreed before any work begins, and there are no hidden charges, surprise invoices, or unexpected costs. We communicate clearly about what is included, what might incur an additional charge (such as catching up on historical bookkeeping or complex payroll setups), and we always seek your approval before proceeding. This straightforward, honest approach has earned us the trust of over 500 UK businesses.
             </p>
           </div>
         </section>
@@ -1659,7 +1659,7 @@ const HomePage = memo(function HomePage() {
               Security and confidentiality are paramount. All client data is handled in accordance with UK GDPR and the Data Protection Act 2018. We use encrypted cloud platforms, two-factor authentication, and role-based access controls to ensure your financial records are protected at all times. We never share your data with third parties without your explicit consent, and you retain full ownership and access to your data throughout our engagement.
             </p>
             <p>
-              Our fixed-fee model, no-contract approach, and commitment to responsive communication set us apart from traditional bookkeeping providers. You will have a dedicated contact who knows your business and is available to answer questions, provide guidance, and ensure your bookkeeping runs smoothly. With over 2,500 businesses supported, £180 million in transactions processed, and a 99.8% filing accuracy rate, we have the experience and track record to deliver reliable, professional <a href="#home" className="text-[#f59e0b] underline font-medium">bookkeeping support</a> for your business.
+              Our fixed-fee model, no-contract approach, and commitment to responsive communication set us apart from traditional bookkeeping providers. You will have a dedicated contact who knows your business and is available to answer questions, provide guidance, and ensure your bookkeeping runs smoothly. With over 500 businesses supported, £1 million in transactions processed, and a 99.8% filing accuracy rate, we have the experience and track record to deliver reliable, professional <a href="#home" className="text-[#f59e0b] underline font-medium">bookkeeping support</a> for your business.
             </p>
           </div>
         </section>
@@ -1751,7 +1751,7 @@ const AboutPage = memo(function AboutPage() {
       <section className="mb-10">
         <h2 className="font-heading text-2xl font-bold text-[#1a2744] mb-4">Our Experience</h2>
         <p className="text-[#374151] mb-4">
-          Our team has supported UK businesses with bookkeeping for over a decade, building deep expertise in cloud accounting, Making Tax Digital compliance, and the specific challenges faced by sole traders, limited companies, and SMEs. We have assisted over 2,500 UK businesses with their financial record-keeping, processing more than £180 million in transactions annually.
+          Our team has supported UK businesses with bookkeeping for over a decade, building deep expertise in cloud accounting, Making Tax Digital compliance, and the specific challenges faced by sole traders, limited companies, and SMEs. We have assisted over 500 UK businesses with their financial record-keeping, processing more than £1 million in transactions annually.
         </p>
         <p className="text-[#374151]">
           We have worked across a wide range of industry sectors including e-commerce, construction and trades, professional services, hospitality, retail, property and landlord portfolios, healthcare, and creative industries. This breadth of experience means we understand the unique bookkeeping challenges faced by different business types and can provide tailored support accordingly.
@@ -1889,6 +1889,7 @@ const PricingPage = memo(function PricingPage({ onOpenForm }: { onOpenForm: () =
                 ))}
               </ul>
               <Button 
+                type="button"
                 onClick={onOpenForm}
                 className={`w-full mt-6 ${tier.popular ? 'bg-[#f59e0b] hover:bg-[#d97706] text-[#1a2744]' : 'bg-[#1a2744] hover:bg-[#2a3b5c]'}`}
               >
@@ -1903,6 +1904,7 @@ const PricingPage = memo(function PricingPage({ onOpenForm }: { onOpenForm: () =
         <h3 className="font-bold text-[#1a2744] mb-2">Need a tailored quote?</h3>
         <p className="text-[#374151] mb-4">If your business has specific requirements not covered by our standard plans, contact us for a bespoke quote. We work with businesses of all sizes and can create a custom package to match your needs.</p>
         <Button 
+          type="button"
           onClick={onOpenForm}
           variant="outline" 
           className="border-[#f59e0b] text-[#f59e0b] hover:bg-[#f59e0b] hover:text-[#1a2744]"
