@@ -233,3 +233,6 @@ Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allow
 ✓ Compiled in 172ms
 ✓ Compiled in 161ms
 ✓ Compiled in 143ms
+ GET / 200 in 184ms (compile: 57ms, render: 126ms)
+✓ Compiled in 116ms
+✓ Compiled in 108ms

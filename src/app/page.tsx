@@ -889,7 +889,7 @@ export default function Home() {
         {pageInfo.type === 'home' && <HomePage />}
         {pageInfo.type === 'about' && <AboutPage />}
         {pageInfo.type === 'services' && <ServicesPage />}
-        {pageInfo.type === 'pricing' && <PricingPage />}
+        {pageInfo.type === 'pricing' && <PricingPage onOpenForm={() => setShowFormModal(true)} />}
         {pageInfo.type === 'contact' && <ContactPage onOpenForm={() => setShowFormModal(true)} />}
         {pageInfo.type === 'privacy' && <PrivacyPage />}
         {pageInfo.type === 'cookies' && <CookiesPage />}
@@ -1855,7 +1855,7 @@ const ServicesPage = memo(function ServicesPage() {
 })
 
 // Pricing Page Component
-const PricingPage = memo(function PricingPage() {
+const PricingPage = memo(function PricingPage({ onOpenForm }: { onOpenForm: () => void }) {
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
       <h1 className="font-heading text-3xl md:text-4xl font-bold text-[#1a2744] mb-4">Bookkeeping Pricing</h1>
@@ -1888,7 +1888,10 @@ const PricingPage = memo(function PricingPage() {
                   </li>
                 ))}
               </ul>
-              <Button className={`w-full mt-6 ${tier.popular ? 'bg-[#f59e0b] hover:bg-[#d97706] text-[#1a2744]' : 'bg-[#1a2744] hover:bg-[#2a3b5c]'}`}>
+              <Button 
+                onClick={onOpenForm}
+                className={`w-full mt-6 ${tier.popular ? 'bg-[#f59e0b] hover:bg-[#d97706] text-[#1a2744]' : 'bg-[#1a2744] hover:bg-[#2a3b5c]'}`}
+              >
                 Get Started
               </Button>
             </CardContent>
@@ -1899,8 +1902,12 @@ const PricingPage = memo(function PricingPage() {
       <div className="bg-[#f9fafb] p-6 rounded-lg border border-[#e5e7eb]">
         <h3 className="font-bold text-[#1a2744] mb-2">Need a tailored quote?</h3>
         <p className="text-[#374151] mb-4">If your business has specific requirements not covered by our standard plans, contact us for a bespoke quote. We work with businesses of all sizes and can create a custom package to match your needs.</p>
-        <Button variant="outline" className="border-[#f59e0b] text-[#f59e0b] hover:bg-[#f59e0b] hover:text-[#1a2744]">
-          <a href="#contact">Contact Us</a>
+        <Button 
+          onClick={onOpenForm}
+          variant="outline" 
+          className="border-[#f59e0b] text-[#f59e0b] hover:bg-[#f59e0b] hover:text-[#1a2744]"
+        >
+          Contact Us
         </Button>
       </div>
 
