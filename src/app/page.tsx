@@ -712,6 +712,73 @@ export default function Home() {
     message: '',
   })
 
+  // Sidebar form state
+  const [sidebarSubmitting, setSidebarSubmitting] = useState(false)
+  const [sidebarSubmitted, setSidebarSubmitted] = useState(false)
+  const [sidebarForm, setSidebarForm] = useState({
+    businessName: '',
+    name: '',
+    phone: '',
+    email: '',
+    transactionVolume: '',
+    message: '',
+  })
+
+  // Sidebar form submit handler
+  const handleSidebarSubmit = useCallback(async () => {
+    if (!sidebarForm.name || !sidebarForm.phone || !sidebarForm.email) {
+      alert('Please fill in all required fields')
+      return
+    }
+    setSidebarSubmitting(true)
+    try {
+      const emailMessage = `
+NEW BOOKKEEPING ENQUIRY (SIDEBAR FORM)
+Received: ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}
+
+BUSINESS DETAILS:
+Business Name: ${sidebarForm.businessName || 'Not provided'}
+Contact Name: ${sidebarForm.name}
+Email: ${sidebarForm.email}
+Phone: ${sidebarForm.phone}
+
+SERVICE DETAILS:
+Monthly Transaction Volume: ${sidebarForm.transactionVolume || 'Not specified'}
+
+MESSAGE:
+${sidebarForm.message || 'No additional message provided'}
+      `.trim()
+
+      const formspreeData = new URLSearchParams()
+      formspreeData.append('name', sidebarForm.name)
+      formspreeData.append('email', sidebarForm.email)
+      formspreeData.append('phone', sidebarForm.phone)
+      formspreeData.append('message', emailMessage)
+      formspreeData.append('_subject', `New Enquiry from ${sidebarForm.name} — ${sidebarForm.businessName || 'Business Not Specified'}`)
+      formspreeData.append('_replyto', sidebarForm.email)
+
+      const response = await fetch('https://formspree.io/f/maqpvbgk', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json',
+        },
+        body: formspreeData.toString(),
+      })
+
+      if (response.ok) {
+        setSidebarSubmitted(true)
+      } else {
+        alert('Failed to submit. Please try again.')
+      }
+    } catch (error) {
+      console.error('Sidebar form error:', error)
+      alert('Failed to submit. Please try again.')
+    } finally {
+      setSidebarSubmitting(false)
+    }
+  }, [sidebarForm])
+
   // Form handlers
   const handleServiceToggle = useCallback((service: string) => {
     setFormData(prev => ({
@@ -987,47 +1054,93 @@ export default function Home() {
             <CardTitle className="text-lg">Get A Free Bookkeeping Assessment</CardTitle>
           </CardHeader>
           <CardContent className="p-4 space-y-4">
-            <div>
-              <Label htmlFor="sidebar-business">Business Name</Label>
-              <Input id="sidebar-business" placeholder="Your business name" className="mt-1" />
-            </div>
-            <div>
-              <Label htmlFor="sidebar-name">Your Name *</Label>
-              <Input id="sidebar-name" placeholder="Full name" className="mt-1" />
-            </div>
-            <div>
-              <Label htmlFor="sidebar-phone">Phone *</Label>
-              <Input id="sidebar-phone" placeholder="Phone number" className="mt-1" />
-            </div>
-            <div>
-              <Label htmlFor="sidebar-email">Email *</Label>
-              <Input id="sidebar-email" type="email" placeholder="Email address" className="mt-1" />
-            </div>
-            <div>
-              <Label>Monthly Transactions</Label>
-              <Select>
-                <SelectTrigger className="mt-1">
-                  <SelectValue placeholder="Select volume" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="under-50">Under 50</SelectItem>
-                  <SelectItem value="50-200">50–200</SelectItem>
-                  <SelectItem value="200-500">200–500</SelectItem>
-                  <SelectItem value="500-1000">500–1,000</SelectItem>
-                  <SelectItem value="over-1000">Over 1,000</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div>
-              <Label htmlFor="sidebar-message">Message</Label>
-              <Textarea id="sidebar-message" placeholder="Tell us about your bookkeeping needs" className="mt-1" rows={3} />
-            </div>
-            <Button onClick={() => setShowFormModal(true)} className="w-full bg-[#f59e0b] hover:bg-[#d97706] text-[#1a2744] font-bold">
-              Request Free Assessment
-            </Button>
-            <p className="text-xs text-center text-gray-500">
-              No obligation. We respond within 1 working day.
-            </p>
+            {sidebarSubmitted ? (
+              <div className="text-center py-6">
+                <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto mb-3" />
+                <h3 className="font-bold text-[#1a2744] mb-2">Thank You!</h3>
+                <p className="text-sm text-gray-600">Your enquiry has been submitted. We will be in touch within one working day.</p>
+              </div>
+            ) : (
+              <>
+                <div>
+                  <Label htmlFor="sidebar-business">Business Name</Label>
+                  <Input 
+                    id="sidebar-business" 
+                    placeholder="Your business name" 
+                    className="mt-1"
+                    value={sidebarForm.businessName}
+                    onChange={e => setSidebarForm(prev => ({ ...prev, businessName: e.target.value }))}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="sidebar-name">Your Name *</Label>
+                  <Input 
+                    id="sidebar-name" 
+                    placeholder="Full name" 
+                    className="mt-1"
+                    value={sidebarForm.name}
+                    onChange={e => setSidebarForm(prev => ({ ...prev, name: e.target.value }))}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="sidebar-phone">Phone *</Label>
+                  <Input 
+                    id="sidebar-phone" 
+                    placeholder="Phone number" 
+                    className="mt-1"
+                    value={sidebarForm.phone}
+                    onChange={e => setSidebarForm(prev => ({ ...prev, phone: e.target.value }))}
+                  />
+                </div>
+                <div>
+                  <Label htmlFor="sidebar-email">Email *</Label>
+                  <Input 
+                    id="sidebar-email" 
+                    type="email" 
+                    placeholder="Email address" 
+                    className="mt-1"
+                    value={sidebarForm.email}
+                    onChange={e => setSidebarForm(prev => ({ ...prev, email: e.target.value }))}
+                  />
+                </div>
+                <div>
+                  <Label>Monthly Transactions</Label>
+                  <Select value={sidebarForm.transactionVolume} onValueChange={v => setSidebarForm(prev => ({ ...prev, transactionVolume: v }))}>
+                    <SelectTrigger className="mt-1">
+                      <SelectValue placeholder="Select volume" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="under-50">Under 50</SelectItem>
+                      <SelectItem value="50-200">50–200</SelectItem>
+                      <SelectItem value="200-500">200–500</SelectItem>
+                      <SelectItem value="500-1000">500–1,000</SelectItem>
+                      <SelectItem value="over-1000">Over 1,000</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="sidebar-message">Message</Label>
+                  <Textarea 
+                    id="sidebar-message" 
+                    placeholder="Tell us about your bookkeeping needs" 
+                    className="mt-1" 
+                    rows={3}
+                    value={sidebarForm.message}
+                    onChange={e => setSidebarForm(prev => ({ ...prev, message: e.target.value }))}
+                  />
+                </div>
+                <Button 
+                  onClick={handleSidebarSubmit} 
+                  disabled={sidebarSubmitting}
+                  className="w-full bg-[#f59e0b] hover:bg-[#d97706] text-[#1a2744] font-bold"
+                >
+                  {sidebarSubmitting ? 'Submitting...' : 'Request Free Assessment'}
+                </Button>
+                <p className="text-xs text-center text-gray-500">
+                  No obligation. We respond within 1 working day.
+                </p>
+              </>
+            )}
           </CardContent>
         </Card>
       </div>

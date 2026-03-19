@@ -209,3 +209,9 @@ Use 'kill 452' to stop it.
 ✓ Compiled in 189ms
  GET / 200 in 146ms (compile: 46ms, render: 100ms)
 ✓ Compiled in 185ms
+ GET / 200 in 168ms (compile: 56ms, render: 112ms)
+ GET / 200 in 36ms (compile: 3ms, render: 33ms)
+✓ Compiled in 121ms
+✓ Compiled in 146ms
+⚠ Cross origin request detected from preview-chat-9e7806d4-7fa6-412f-be8a-9e8249130b4c.space.z.ai to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
