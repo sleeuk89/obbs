@@ -1338,7 +1338,7 @@ ${sidebarForm.message || 'No additional message provided'}
                 <a href="#cookies" className="text-[#f59e0b] underline ml-1">Learn more</a>
               </p>
               <div className="flex gap-2">
-                <Button onClick={() => handleCookieConsent('rejected')} variant="outline" size="sm" className="text-white border-white hover:bg-white/10 hover:text-[#1a2744]">
+                <Button onClick={() => handleCookieConsent('rejected')} size="sm" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-[#1a2744]">
                   Reject All
                 </Button>
                 <Button onClick={() => handleCookieConsent('accepted')} size="sm" className="bg-[#f59e0b] hover:bg-[#d97706] text-[#1a2744]">
