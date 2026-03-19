@@ -981,7 +981,7 @@ export default function Home() {
       </footer>
 
       {/* Sticky Sidebar Form (Desktop) */}
-      <div className="hidden lg:block fixed right-4 top-24 w-80 z-40">
+      <div className="hidden lg:block fixed right-4 top-24 w-80 z-40 max-h-[calc(100vh-120px)] overflow-y-auto" style={{ bottom: '100px' }}>
         <Card className="shadow-xl border-2 border-[#f59e0b]">
           <CardHeader className="bg-[#1a2744] text-white">
             <CardTitle className="text-lg">Get A Free Bookkeeping Assessment</CardTitle>
@@ -1225,7 +1225,7 @@ export default function Home() {
                 <a href="#cookies" className="text-[#f59e0b] underline ml-1">Learn more</a>
               </p>
               <div className="flex gap-2">
-                <Button onClick={() => handleCookieConsent('rejected')} variant="outline" size="sm" className="text-white border-white hover:bg-white/10">
+                <Button onClick={() => handleCookieConsent('rejected')} variant="outline" size="sm" className="text-white border-white hover:bg-white/10 hover:text-[#1a2744]">
                   Reject All
                 </Button>
                 <Button onClick={() => handleCookieConsent('accepted')} size="sm" className="bg-[#f59e0b] hover:bg-[#d97706] text-[#1a2744]">
@@ -1293,9 +1293,6 @@ const HomePage = memo(function HomePage() {
             <div className="flex flex-wrap gap-4 mb-8">
               <Button size="lg" className="bg-[#f59e0b] hover:bg-[#d97706] text-[#1a2744] font-bold">
                 Get A Free Assessment
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-                <a href="#services">View Services</a>
               </Button>
             </div>
             <div className="flex flex-wrap gap-4 text-sm">
