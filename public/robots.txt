@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Disallow internal API routes from indexing
+Disallow: /api/
+
+Sitemap: https://outsourcedbookkeepingservices.co.uk/sitemap.xml
