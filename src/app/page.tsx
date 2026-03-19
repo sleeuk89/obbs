@@ -1961,7 +1961,7 @@ const PrivacyPage = memo(function PrivacyPage() {
         <section>
           <h2 className="font-heading text-xl font-bold text-[#1a2744] mb-3">Data Controller</h2>
           <p>
-            The data controller for this website is Outsourced Bookkeeping Services, contactable at sleeuk89@gmail.com. We are committed to protecting your personal data and your privacy rights in accordance with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.
+            The data controller for this website is Outsourced Bookkeeping Services. You can contact us via our <a href="#contact" className="text-[#f59e0b] underline">contact form</a>. We are committed to protecting your personal data and your privacy rights in accordance with the UK General Data Protection Regulation (UK GDPR) and the Data Protection Act 2018.
           </p>
         </section>
 
@@ -1996,7 +1996,7 @@ const PrivacyPage = memo(function PrivacyPage() {
         <section>
           <h2 className="font-heading text-xl font-bold text-[#1a2744] mb-3">Your Rights</h2>
           <p>
-            Under UK GDPR, you have the right to: access your personal data; rectify inaccurate data; erase your data; restrict processing; data portability; and object to processing. To exercise any of these rights, contact us at sleeuk89@gmail.com.
+            Under UK GDPR, you have the right to: access your personal data; rectify inaccurate data; erase your data; restrict processing; data portability; and object to processing. To exercise any of these rights, please <a href="#contact" className="text-[#f59e0b] underline">contact us</a>.
           </p>
         </section>
 
@@ -2057,7 +2057,7 @@ const CookiesPage = memo(function CookiesPage() {
         <section>
           <h2 className="font-heading text-xl font-bold text-[#1a2744] mb-3">Contact Us</h2>
           <p>
-            If you have any questions about our use of cookies, please contact us at sleeuk89@gmail.com.
+            If you have any questions about our use of cookies, please <a href="#contact" className="text-[#f59e0b] underline">contact us</a>.
           </p>
         </section>
       </div>
