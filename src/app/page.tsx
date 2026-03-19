@@ -981,7 +981,7 @@ export default function Home() {
       </footer>
 
       {/* Sticky Sidebar Form (Desktop) */}
-      <div className="hidden lg:block fixed right-4 top-24 w-80 z-40 max-h-[calc(100vh-120px)] overflow-y-auto" style={{ bottom: '100px' }}>
+      <div className="hidden lg:block fixed right-4 top-24 w-80 z-40" style={{ bottom: '100px' }}>
         <Card className="shadow-xl border-2 border-[#f59e0b]">
           <CardHeader className="bg-[#1a2744] text-white">
             <CardTitle className="text-lg">Get A Free Bookkeeping Assessment</CardTitle>
@@ -1022,7 +1022,7 @@ export default function Home() {
               <Label htmlFor="sidebar-message">Message</Label>
               <Textarea id="sidebar-message" placeholder="Tell us about your bookkeeping needs" className="mt-1" rows={3} />
             </div>
-            <Button className="w-full bg-[#f59e0b] hover:bg-[#d97706] text-[#1a2744] font-bold">
+            <Button onClick={() => setShowFormModal(true)} className="w-full bg-[#f59e0b] hover:bg-[#d97706] text-[#1a2744] font-bold">
               Request Free Assessment
             </Button>
             <p className="text-xs text-center text-gray-500">

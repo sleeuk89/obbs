@@ -207,3 +207,5 @@ Use 'kill 452' to stop it.
  GET / 200 in 31ms (compile: 2ms, render: 29ms)
  GET / 200 in 28ms (compile: 2ms, render: 26ms)
 ✓ Compiled in 189ms
+ GET / 200 in 146ms (compile: 46ms, render: 100ms)
+✓ Compiled in 185ms
