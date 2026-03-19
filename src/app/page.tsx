@@ -685,8 +685,8 @@ const trustBadges = [
 
 // Stats
 const stats = [
-  { value: "2,500+", label: "Businesses Supported" },
-  { value: "£180M+", label: "In Transactions Processed" },
+  { value: "500+", label: "Businesses Supported" },
+  { value: "£1M+", label: "In Transactions Processed" },
   { value: "99.8%", label: "Filing Accuracy Rate" },
   { value: "200+", label: "5-Star Google Reviews" },
 ]
