@@ -712,73 +712,6 @@ export default function Home() {
     message: '',
   })
 
-  // Sidebar form state
-  const [sidebarSubmitting, setSidebarSubmitting] = useState(false)
-  const [sidebarSubmitted, setSidebarSubmitted] = useState(false)
-  const [sidebarForm, setSidebarForm] = useState({
-    businessName: '',
-    name: '',
-    phone: '',
-    email: '',
-    transactionVolume: '',
-    message: '',
-  })
-
-  // Sidebar form submit handler
-  const handleSidebarSubmit = useCallback(async () => {
-    if (!sidebarForm.name || !sidebarForm.phone || !sidebarForm.email) {
-      alert('Please fill in all required fields')
-      return
-    }
-    setSidebarSubmitting(true)
-    try {
-      const emailMessage = `
-NEW BOOKKEEPING ENQUIRY (SIDEBAR FORM)
-Received: ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}
-
-BUSINESS DETAILS:
-Business Name: ${sidebarForm.businessName || 'Not provided'}
-Contact Name: ${sidebarForm.name}
-Email: ${sidebarForm.email}
-Phone: ${sidebarForm.phone}
-
-SERVICE DETAILS:
-Monthly Transaction Volume: ${sidebarForm.transactionVolume || 'Not specified'}
-
-MESSAGE:
-${sidebarForm.message || 'No additional message provided'}
-      `.trim()
-
-      const formspreeData = new URLSearchParams()
-      formspreeData.append('name', sidebarForm.name)
-      formspreeData.append('email', sidebarForm.email)
-      formspreeData.append('phone', sidebarForm.phone)
-      formspreeData.append('message', emailMessage)
-      formspreeData.append('_subject', `New Enquiry from ${sidebarForm.name} — ${sidebarForm.businessName || 'Business Not Specified'}`)
-      formspreeData.append('_replyto', sidebarForm.email)
-
-      const response = await fetch('https://formspree.io/f/maqpvbgk', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'application/json',
-        },
-        body: formspreeData.toString(),
-      })
-
-      if (response.ok) {
-        setSidebarSubmitted(true)
-      } else {
-        alert('Failed to submit. Please try again.')
-      }
-    } catch (error) {
-      console.error('Sidebar form error:', error)
-      alert('Failed to submit. Please try again.')
-    } finally {
-      setSidebarSubmitting(false)
-    }
-  }, [sidebarForm])
-
   // Form handlers
   const handleServiceToggle = useCallback((service: string) => {
     setFormData(prev => ({
@@ -1047,104 +980,6 @@ ${sidebarForm.message || 'No additional message provided'}
         </div>
       </footer>
 
-      {/* Sticky Sidebar Form (Desktop) */}
-      <div className="hidden lg:block fixed right-4 top-24 w-80 z-40" style={{ bottom: '100px' }}>
-        <Card className="shadow-xl border-2 border-[#f59e0b]">
-          <CardHeader className="bg-[#1a2744] text-white py-3 px-4">
-            <CardTitle className="text-base">Get A Free Bookkeeping Assessment</CardTitle>
-          </CardHeader>
-          <CardContent className="p-3 space-y-2">
-            {sidebarSubmitted ? (
-              <div className="text-center py-4">
-                <CheckCircle2 className="h-10 w-10 text-green-500 mx-auto mb-2" />
-                <h3 className="font-bold text-[#1a2744] mb-1 text-sm">Thank You!</h3>
-                <p className="text-xs text-gray-600">Your enquiry has been submitted. We will be in touch within one working day.</p>
-              </div>
-            ) : (
-              <>
-                <div>
-                  <Label htmlFor="sidebar-business" className="text-xs">Business Name</Label>
-                  <Input 
-                    id="sidebar-business" 
-                    placeholder="Your business name" 
-                    className="mt-0.5 h-8 text-sm"
-                    value={sidebarForm.businessName}
-                    onChange={e => setSidebarForm(prev => ({ ...prev, businessName: e.target.value }))}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="sidebar-name" className="text-xs">Your Name *</Label>
-                  <Input 
-                    id="sidebar-name" 
-                    placeholder="Full name" 
-                    className="mt-0.5 h-8 text-sm"
-                    value={sidebarForm.name}
-                    onChange={e => setSidebarForm(prev => ({ ...prev, name: e.target.value }))}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="sidebar-phone" className="text-xs">Phone *</Label>
-                  <Input 
-                    id="sidebar-phone" 
-                    placeholder="Phone number" 
-                    className="mt-0.5 h-8 text-sm"
-                    value={sidebarForm.phone}
-                    onChange={e => setSidebarForm(prev => ({ ...prev, phone: e.target.value }))}
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="sidebar-email" className="text-xs">Email *</Label>
-                  <Input 
-                    id="sidebar-email" 
-                    type="email" 
-                    placeholder="Email address" 
-                    className="mt-0.5 h-8 text-sm"
-                    value={sidebarForm.email}
-                    onChange={e => setSidebarForm(prev => ({ ...prev, email: e.target.value }))}
-                  />
-                </div>
-                <div>
-                  <Label className="text-xs">Monthly Transactions</Label>
-                  <Select value={sidebarForm.transactionVolume} onValueChange={v => setSidebarForm(prev => ({ ...prev, transactionVolume: v }))}>
-                    <SelectTrigger className="mt-0.5 h-8 text-sm">
-                      <SelectValue placeholder="Select volume" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="under-50">Under 50</SelectItem>
-                      <SelectItem value="50-200">50–200</SelectItem>
-                      <SelectItem value="200-500">200–500</SelectItem>
-                      <SelectItem value="500-1000">500–1,000</SelectItem>
-                      <SelectItem value="over-1000">Over 1,000</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="sidebar-message" className="text-xs">Message</Label>
-                  <Textarea 
-                    id="sidebar-message" 
-                    placeholder="Tell us about your bookkeeping needs" 
-                    className="mt-0.5 text-sm" 
-                    rows={2}
-                    value={sidebarForm.message}
-                    onChange={e => setSidebarForm(prev => ({ ...prev, message: e.target.value }))}
-                  />
-                </div>
-                <Button 
-                  onClick={handleSidebarSubmit} 
-                  disabled={sidebarSubmitting}
-                  className="w-full bg-[#f59e0b] hover:bg-[#d97706] text-[#1a2744] font-bold h-9 text-sm"
-                >
-                  {sidebarSubmitting ? 'Submitting...' : 'Request Free Assessment'}
-                </Button>
-                <p className="text-xs text-center text-gray-500">
-                  No obligation. We respond within 1 working day.
-                </p>
-              </>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-
       {/* Sticky Bottom Button */}
       <button
         onClick={() => setShowFormModal(true)}
@@ -1389,39 +1224,218 @@ ${sidebarForm.message || 'No additional message provided'}
   )
 }
 
+// Hero Form Component
+const HeroForm = memo(function HeroForm() {
+  const [submitting, setSubmitting] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
+  const [formData, setFormData] = useState({
+    businessName: '',
+    name: '',
+    phone: '',
+    email: '',
+    transactionVolume: '',
+    message: '',
+  })
+
+  const handleSubmit = useCallback(async () => {
+    if (!formData.name || !formData.phone || !formData.email) {
+      alert('Please fill in all required fields')
+      return
+    }
+    setSubmitting(true)
+    try {
+      const emailMessage = `
+NEW BOOKKEEPING ENQUIRY (HERO FORM)
+Received: ${new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })}
+
+BUSINESS DETAILS:
+Business Name: ${formData.businessName || 'Not provided'}
+Contact Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+
+SERVICE DETAILS:
+Monthly Transaction Volume: ${formData.transactionVolume || 'Not specified'}
+
+MESSAGE:
+${formData.message || 'No additional message provided'}
+      `.trim()
+
+      const formspreeData = new URLSearchParams()
+      formspreeData.append('name', formData.name)
+      formspreeData.append('email', formData.email)
+      formspreeData.append('phone', formData.phone)
+      formspreeData.append('message', emailMessage)
+      formspreeData.append('_subject', `New Enquiry from ${formData.name} — ${formData.businessName || 'Business Not Specified'}`)
+      formspreeData.append('_replyto', formData.email)
+
+      const response = await fetch('https://formspree.io/f/maqpvbgk', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json',
+        },
+        body: formspreeData.toString(),
+      })
+
+      if (response.ok) {
+        setSubmitted(true)
+      } else {
+        alert('Failed to submit. Please try again.')
+      }
+    } catch (error) {
+      console.error('Form error:', error)
+      alert('Failed to submit. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
+  }, [formData])
+
+  return (
+    <Card className="shadow-2xl border-2 border-[#f59e0b] bg-white">
+      <CardHeader className="bg-[#f59e0b] py-3 px-4">
+        <CardTitle className="text-base text-[#1a2744] font-bold">Get A Free Assessment</CardTitle>
+      </CardHeader>
+      <CardContent className="p-4 space-y-3">
+        {submitted ? (
+          <div className="text-center py-6">
+            <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto mb-3" />
+            <h3 className="font-bold text-[#1a2744] mb-2">Thank You!</h3>
+            <p className="text-sm text-gray-600">Your enquiry has been submitted. We will be in touch within one working day.</p>
+          </div>
+        ) : (
+          <>
+            <div>
+              <Label htmlFor="hero-business" className="text-xs font-medium">Business Name</Label>
+              <Input 
+                id="hero-business" 
+                placeholder="Your business name" 
+                className="mt-1 h-9 text-sm"
+                value={formData.businessName}
+                onChange={e => setFormData(prev => ({ ...prev, businessName: e.target.value }))}
+              />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label htmlFor="hero-name" className="text-xs font-medium">Your Name *</Label>
+                <Input 
+                  id="hero-name" 
+                  placeholder="Full name" 
+                  className="mt-1 h-9 text-sm"
+                  value={formData.name}
+                  onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                />
+              </div>
+              <div>
+                <Label htmlFor="hero-phone" className="text-xs font-medium">Phone *</Label>
+                <Input 
+                  id="hero-phone" 
+                  placeholder="Phone number" 
+                  className="mt-1 h-9 text-sm"
+                  value={formData.phone}
+                  onChange={e => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                />
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="hero-email" className="text-xs font-medium">Email *</Label>
+              <Input 
+                id="hero-email" 
+                type="email" 
+                placeholder="Email address" 
+                className="mt-1 h-9 text-sm"
+                value={formData.email}
+                onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))}
+              />
+            </div>
+            <div>
+              <Label htmlFor="hero-volume" className="text-xs font-medium">Monthly Transactions</Label>
+              <Select value={formData.transactionVolume} onValueChange={v => setFormData(prev => ({ ...prev, transactionVolume: v }))}>
+                <SelectTrigger id="hero-volume" className="mt-1 h-9 text-sm">
+                  <SelectValue placeholder="Select volume" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="under-50">Under 50</SelectItem>
+                  <SelectItem value="50-200">50–200</SelectItem>
+                  <SelectItem value="200-500">200–500</SelectItem>
+                  <SelectItem value="500-1000">500–1,000</SelectItem>
+                  <SelectItem value="over-1000">Over 1,000</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="hero-message" className="text-xs font-medium">Message (optional)</Label>
+              <Textarea 
+                id="hero-message" 
+                placeholder="Tell us about your bookkeeping needs" 
+                className="mt-1 text-sm" 
+                rows={2}
+                value={formData.message}
+                onChange={e => setFormData(prev => ({ ...prev, message: e.target.value }))}
+              />
+            </div>
+            <Button 
+              onClick={handleSubmit} 
+              disabled={submitting}
+              className="w-full bg-[#1a2744] hover:bg-[#2a3b5c] text-white font-bold h-10"
+            >
+              {submitting ? 'Submitting...' : 'Request Free Assessment'}
+            </Button>
+            <p className="text-xs text-center text-gray-500">
+              No obligation. We respond within 1 working day.
+            </p>
+          </>
+        )}
+      </CardContent>
+    </Card>
+  )
+})
+
 // Homepage Component
 const HomePage = memo(function HomePage() {
   return (
-    <div className="lg:mr-80">
+    <div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-[#1a2744] to-[#2a3b5c] text-white py-16 md:py-24">
+      <section className="bg-gradient-to-br from-[#1a2744] to-[#2a3b5c] text-white py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <h1 className="font-heading text-3xl md:text-5xl font-bold mb-6 leading-tight">
-              Professional <span className="text-[#f59e0b]">Outsourced Bookkeeping Services</span> for UK Businesses
-            </h1>
-            <p className="text-lg md:text-xl text-gray-200 mb-8">
-              Fixed monthly fees. No long-term contract. MTD-compliant bookkeeping delivered remotely by a dedicated UK-based team.
-            </p>
-            <div className="flex flex-wrap gap-4 mb-8">
-              <Button size="lg" className="bg-[#f59e0b] hover:bg-[#d97706] text-[#1a2744] font-bold">
-                Get A Free Assessment
-              </Button>
+          <div className="grid lg:grid-cols-5 gap-8 items-start">
+            {/* Hero Content */}
+            <div className="lg:col-span-3">
+              <h1 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+                Professional <span className="text-[#f59e0b]">Outsourced Bookkeeping Services</span> for UK Businesses
+              </h1>
+              <p className="text-lg md:text-xl text-gray-200 mb-8">
+                Fixed monthly fees. No long-term contract. MTD-compliant bookkeeping delivered remotely by a dedicated UK-based team.
+              </p>
+              <div className="flex flex-wrap gap-4 text-sm mb-8">
+                {trustBadges.slice(0, 4).map((badge, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <badge.icon className="h-5 w-5 text-[#f59e0b]" />
+                    <span>{badge.text}</span>
+                  </div>
+                ))}
+              </div>
+              {/* Stats */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-8 border-t border-white/20">
+                {stats.map((stat, i) => (
+                  <div key={i} className="text-center md:text-left">
+                    <div className="text-xl md:text-2xl font-bold text-[#f59e0b]">{stat.value}</div>
+                    <div className="text-xs text-gray-300">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="flex flex-wrap gap-4 text-sm">
-              {trustBadges.slice(0, 3).map((badge, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <badge.icon className="h-5 w-5 text-[#f59e0b]" />
-                  <span>{badge.text}</span>
-                </div>
-              ))}
+            
+            {/* Hero Form */}
+            <div className="lg:col-span-2">
+              <HeroForm />
             </div>
           </div>
         </div>
       </section>
 
       {/* Stats Bar */}
-      <section className="bg-[#f59e0b] py-6">
+      <section className="bg-[#f59e0b] py-4 hidden">
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
             {stats.map((stat, i) => (
@@ -1730,7 +1744,7 @@ const HomePage = memo(function HomePage() {
 // About Page Component
 const AboutPage = memo(function AboutPage() {
   return (
-    <div className="lg:mr-80 max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-12">
       <h1 className="font-heading text-3xl md:text-4xl font-bold text-[#1a2744] mb-8">About Us</h1>
       
       {/* Experience Section */}
@@ -1804,7 +1818,7 @@ const AboutPage = memo(function AboutPage() {
 // Services Page Component
 const ServicesPage = memo(function ServicesPage() {
   return (
-    <div className="lg:mr-80 max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-12">
       <h1 className="font-heading text-3xl md:text-4xl font-bold text-[#1a2744] mb-8">Our Bookkeeping Services</h1>
       
       <p className="text-[#374151] mb-8">
@@ -1843,7 +1857,7 @@ const ServicesPage = memo(function ServicesPage() {
 // Pricing Page Component
 const PricingPage = memo(function PricingPage() {
   return (
-    <div className="lg:mr-80 max-w-6xl mx-auto px-4 py-12">
+    <div className="max-w-6xl mx-auto px-4 py-12">
       <h1 className="font-heading text-3xl md:text-4xl font-bold text-[#1a2744] mb-4">Bookkeeping Pricing</h1>
       <p className="text-[#374151] mb-8">
         Transparent, fixed monthly fees with no hidden costs. Choose the plan that fits your business size and transaction volume. All plans include access to cloud accounting software and a dedicated bookkeeping contact.
@@ -1900,7 +1914,7 @@ const PricingPage = memo(function PricingPage() {
 // Contact Page Component
 const ContactPage = memo(function ContactPage({ onOpenForm }: { onOpenForm: () => void }) {
   return (
-    <div className="lg:mr-80 max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-12">
       <h1 className="font-heading text-3xl md:text-4xl font-bold text-[#1a2744] mb-8">Get A Free Bookkeeping Assessment</h1>
       
       <p className="text-[#374151] mb-8">
@@ -1953,7 +1967,7 @@ const ContactPage = memo(function ContactPage({ onOpenForm }: { onOpenForm: () =
 // Privacy Page Component
 const PrivacyPage = memo(function PrivacyPage() {
   return (
-    <div className="lg:mr-80 max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-12">
       <h1 className="font-heading text-3xl md:text-4xl font-bold text-[#1a2744] mb-8">Privacy Policy</h1>
       <p className="text-sm text-gray-500 mb-8">Last updated: January 2025</p>
 
@@ -2014,7 +2028,7 @@ const PrivacyPage = memo(function PrivacyPage() {
 // Cookies Page Component
 const CookiesPage = memo(function CookiesPage() {
   return (
-    <div className="lg:mr-80 max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-12">
       <h1 className="font-heading text-3xl md:text-4xl font-bold text-[#1a2744] mb-8">Cookie Policy</h1>
       <p className="text-sm text-gray-500 mb-8">Last updated: January 2025</p>
 
@@ -2076,7 +2090,7 @@ const CountyPage = memo(function CountyPage({ county }: { county: typeof locatio
   }, [county.slug])
 
   return (
-    <div className="lg:mr-80 max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-12">
       {/* Breadcrumb */}
       <nav className="text-sm text-gray-500 mb-6">
         <ol className="flex items-center gap-2">
@@ -2175,7 +2189,7 @@ const TownPage = memo(function TownPage({ county, town }: { county: typeof locat
   }, [county.towns, town.slug])
 
   return (
-    <div className="lg:mr-80 max-w-4xl mx-auto px-4 py-12">
+    <div className="max-w-4xl mx-auto px-4 py-12">
       {/* Breadcrumb */}
       <nav className="text-sm text-gray-500 mb-6">
         <ol className="flex items-center gap-2">
