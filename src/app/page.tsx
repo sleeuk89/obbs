@@ -1050,63 +1050,63 @@ ${sidebarForm.message || 'No additional message provided'}
       {/* Sticky Sidebar Form (Desktop) */}
       <div className="hidden lg:block fixed right-4 top-24 w-80 z-40" style={{ bottom: '100px' }}>
         <Card className="shadow-xl border-2 border-[#f59e0b]">
-          <CardHeader className="bg-[#1a2744] text-white">
-            <CardTitle className="text-lg">Get A Free Bookkeeping Assessment</CardTitle>
+          <CardHeader className="bg-[#1a2744] text-white py-3 px-4">
+            <CardTitle className="text-base">Get A Free Bookkeeping Assessment</CardTitle>
           </CardHeader>
-          <CardContent className="p-4 space-y-4">
+          <CardContent className="p-3 space-y-2">
             {sidebarSubmitted ? (
-              <div className="text-center py-6">
-                <CheckCircle2 className="h-12 w-12 text-green-500 mx-auto mb-3" />
-                <h3 className="font-bold text-[#1a2744] mb-2">Thank You!</h3>
-                <p className="text-sm text-gray-600">Your enquiry has been submitted. We will be in touch within one working day.</p>
+              <div className="text-center py-4">
+                <CheckCircle2 className="h-10 w-10 text-green-500 mx-auto mb-2" />
+                <h3 className="font-bold text-[#1a2744] mb-1 text-sm">Thank You!</h3>
+                <p className="text-xs text-gray-600">Your enquiry has been submitted. We will be in touch within one working day.</p>
               </div>
             ) : (
               <>
                 <div>
-                  <Label htmlFor="sidebar-business">Business Name</Label>
+                  <Label htmlFor="sidebar-business" className="text-xs">Business Name</Label>
                   <Input 
                     id="sidebar-business" 
                     placeholder="Your business name" 
-                    className="mt-1"
+                    className="mt-0.5 h-8 text-sm"
                     value={sidebarForm.businessName}
                     onChange={e => setSidebarForm(prev => ({ ...prev, businessName: e.target.value }))}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="sidebar-name">Your Name *</Label>
+                  <Label htmlFor="sidebar-name" className="text-xs">Your Name *</Label>
                   <Input 
                     id="sidebar-name" 
                     placeholder="Full name" 
-                    className="mt-1"
+                    className="mt-0.5 h-8 text-sm"
                     value={sidebarForm.name}
                     onChange={e => setSidebarForm(prev => ({ ...prev, name: e.target.value }))}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="sidebar-phone">Phone *</Label>
+                  <Label htmlFor="sidebar-phone" className="text-xs">Phone *</Label>
                   <Input 
                     id="sidebar-phone" 
                     placeholder="Phone number" 
-                    className="mt-1"
+                    className="mt-0.5 h-8 text-sm"
                     value={sidebarForm.phone}
                     onChange={e => setSidebarForm(prev => ({ ...prev, phone: e.target.value }))}
                   />
                 </div>
                 <div>
-                  <Label htmlFor="sidebar-email">Email *</Label>
+                  <Label htmlFor="sidebar-email" className="text-xs">Email *</Label>
                   <Input 
                     id="sidebar-email" 
                     type="email" 
                     placeholder="Email address" 
-                    className="mt-1"
+                    className="mt-0.5 h-8 text-sm"
                     value={sidebarForm.email}
                     onChange={e => setSidebarForm(prev => ({ ...prev, email: e.target.value }))}
                   />
                 </div>
                 <div>
-                  <Label>Monthly Transactions</Label>
+                  <Label className="text-xs">Monthly Transactions</Label>
                   <Select value={sidebarForm.transactionVolume} onValueChange={v => setSidebarForm(prev => ({ ...prev, transactionVolume: v }))}>
-                    <SelectTrigger className="mt-1">
+                    <SelectTrigger className="mt-0.5 h-8 text-sm">
                       <SelectValue placeholder="Select volume" />
                     </SelectTrigger>
                     <SelectContent>
@@ -1119,12 +1119,12 @@ ${sidebarForm.message || 'No additional message provided'}
                   </Select>
                 </div>
                 <div>
-                  <Label htmlFor="sidebar-message">Message</Label>
+                  <Label htmlFor="sidebar-message" className="text-xs">Message</Label>
                   <Textarea 
                     id="sidebar-message" 
                     placeholder="Tell us about your bookkeeping needs" 
-                    className="mt-1" 
-                    rows={3}
+                    className="mt-0.5 text-sm" 
+                    rows={2}
                     value={sidebarForm.message}
                     onChange={e => setSidebarForm(prev => ({ ...prev, message: e.target.value }))}
                   />
@@ -1132,7 +1132,7 @@ ${sidebarForm.message || 'No additional message provided'}
                 <Button 
                   onClick={handleSidebarSubmit} 
                   disabled={sidebarSubmitting}
-                  className="w-full bg-[#f59e0b] hover:bg-[#d97706] text-[#1a2744] font-bold"
+                  className="w-full bg-[#f59e0b] hover:bg-[#d97706] text-[#1a2744] font-bold h-9 text-sm"
                 >
                   {sidebarSubmitting ? 'Submitting...' : 'Request Free Assessment'}
                 </Button>
