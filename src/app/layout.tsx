@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import { Playfair_Display } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
@@ -90,6 +91,9 @@ export const metadata: Metadata = {
     canonical: "https://outsourcedbookkeepingservices.co.uk",
   },
   category: "Business Services",
+  verification: {
+    google: "54fGUBgVu5JtTNuEiQ0xO6tA8MzlhKbZx3PFBXR9G_o",
+  },
 };
 
 export default function RootLayout({
@@ -112,6 +116,15 @@ export default function RootLayout({
       >
         {children}
         <Toaster />
+        <Script id="microsoft-clarity" strategy="afterInteractive">
+          {`
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "vymvftm6hw");
+          `}
+        </Script>
       </body>
     </html>
   );
